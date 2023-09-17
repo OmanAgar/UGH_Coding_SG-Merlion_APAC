@@ -80,13 +80,16 @@ def signup_post():
     email = request.form['email']
     confirmpassword = request.form["confirm-password"]
     user = User.query.filter_by(email=email).first()
-    
+    try int(phonenumber):
+        pass
+    except:
+        flash('Invalid Phone Number⠀⠀')
+        return redirect(url_for('signup')) 
     if confirmpassword != password:
-        flash('Email address already exists')
-        return redirect(url_for('signup'))        
-
+        flash('Passwords do not match⠀⠀')
+        return redirect(url_for('signup'))     
     if user:
-        flash('Email address already exists')
+        flash('Email address already exists⠀⠀')
         return redirect(url_for('signup'))
 
     new_user = User(email=email, firstname=firstname, lastname=lastname,

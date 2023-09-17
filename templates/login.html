@@ -57,6 +57,16 @@
         <form action="login" method="POST">
             <input type="text" name="email" placeholder="email" required><br><br>
             <input type="password" name="password" placeholder="Password" required><br><br>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <h5>{{message}}</h5>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+            {% block body %}{% endblock %}
             <input type="submit" value="Login" class="cta-button">
         </form>
 
