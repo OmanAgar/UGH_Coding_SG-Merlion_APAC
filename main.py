@@ -66,3 +66,9 @@ with app.app_context():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+app.run(  # Starts the site
+        host="192.168.10.106",  # Required for repl to detect the site
+        debug=True  # to run Flask in debug mode
+       )
