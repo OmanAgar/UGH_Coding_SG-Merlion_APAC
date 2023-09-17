@@ -61,3 +61,9 @@ class Route(db.Model):
 with app.app_context():
     #db.drop_all()
     db.create_all()
+
+
+#********ROUTING********#
+@app.route('/')
+def index():
+    return render_template('index.html')
