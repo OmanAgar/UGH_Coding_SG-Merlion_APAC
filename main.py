@@ -69,6 +69,6 @@ def index():
 
 
 app.run(  # Starts the site
-        host="192.168.10.106",  # Required for repl to detect the site
+        host="192.168.10.106",  # Required to run the site. must use your own ip
         debug=True  # to run Flask in debug mode
        )
