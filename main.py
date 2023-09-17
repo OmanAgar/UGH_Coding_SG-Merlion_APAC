@@ -42,6 +42,7 @@ class Driver(db.Model):
     peopleallowedtocarry = db.Column(db.Integer, nullable = False)
     model = db.Column(db.String(100), nullable = False)
     seats = db.Column(db.Integer, nullable = False)
+    id = db.Column(db.Integer, primary_key = True)
 
 # coords use long1,lat1,long2,lat2
 class Route(db.Model):
@@ -49,8 +50,9 @@ class Route(db.Model):
     la1 = db.Column(db.Float, nullable = False)
     lo2 = db.Column(db.Float, nullable = False)
     la2 = db.Column(db.Float, nullable = False)
-    driver = db.Column(db.String(100), nullable = False,primary_key = True)
+    driver = db.Column(db.String(100), nullable = False)
     rider = db.Column(db.String(100), nullable = False)
+    id = db.Column(db.Integer, primary_key = True)
 
 with app.app_context():
     #db.drop_all()
