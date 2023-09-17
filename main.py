@@ -48,7 +48,7 @@ class Route(db.Model):
     la1 = db.Column(db.Float, nullable = False)
     lo2 = db.Column(db.Float, nullable = False)
     la2 = db.Column(db.Float, nullable = False)
-    driver = db.Column(db.String(100), nullable = False,unique = True,primary_key = True)
+    driver = db.Column(db.String(100), nullable = False,primary_key = True)
     rider = db.Column(db.String(100), nullable = False)
 
 with app.app_context():
@@ -61,6 +61,50 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@app.route("/signup", methods = ['POST'])
+def signup_post():
+    firstname = request.form['first-name']
+    lastname = request.form['last-name']
+    password = request.form['password']
+    phonenumber = request.form['phone-number']
+    confirmpassword = request.formm["confirm-password"]
+    user = User.query.filter_by(email=email).first()
+    
+    if confrmpassword != password:
+        flash('Email address already exists')
+        return redirect(url_for('signup'))        
+
+    if user:
+        flash('Email address already exists')
+        return redirect(url_for('signup'))
+
+    new_user = User(email=email, name=name, 
+    password=generate_password_hash(password,method='sha-256'))
+
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for("login"))
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/login", methods = ['POST'])
+def login_post():
+    email = request.form['email']
+    password = request.form['password']
+    user = User.query.filter_by(email=email).first()
+  
+    if not user or not check_password_hash(user.password, password):
+        flash('Please check your login details and try again.')
+        return redirect(url_for('login'))
+
+    login_user(user)
+    return redirect(url_for("profile"))
 
 app.run(  # Starts the site
         host="192.168.10.106",  # Required to run the site. must use your own ip
