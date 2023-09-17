@@ -4,8 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from objects
-os.system("objects.py")
+import objects
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
