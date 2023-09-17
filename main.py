@@ -96,7 +96,7 @@ def signup_post():
         return redirect(url_for('signup'))
     if len([*password]) <=7:
         flash('Password must be at least 8 characters long⠀⠀')
-        return redirect(url_for('signup))
+        return redirect(url_for('signup'))
 
     new_user = User(email=email, firstname=firstname, lastname=lastname,
     password=generate_password_hash(password,method='sha-256'),password=password)
