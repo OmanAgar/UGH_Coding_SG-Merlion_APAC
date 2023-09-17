@@ -30,7 +30,6 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default = func.now())
     firstname = db.Column(db.String(100), nullable = False)
     lastname = db.Column(db.String(100), nullable = False)
-    age = db.Column(db.Integer, nullable = False)
     phonenumber = db.Column(db.Integer, nullable = False,unique = True)
     id = db.Column(db.Integer, primary_key = True)
     def __repr__(self):
@@ -78,10 +77,11 @@ def signup_post():
     lastname = request.form['last-name']
     password = request.form['password']
     phonenumber = request.form['phone-number']
-    confirmpassword = request.formm["confirm-password"]
+    email = request.form['email']
+    confirmpassword = request.form["confirm-password"]
     user = User.query.filter_by(email=email).first()
     
-    if confrmpassword != password:
+    if confirmpassword != password:
         flash('Email address already exists')
         return redirect(url_for('signup'))        
 
@@ -89,8 +89,8 @@ def signup_post():
         flash('Email address already exists')
         return redirect(url_for('signup'))
 
-    new_user = User(email=email, name=name, 
-    password=generate_password_hash(password,method='sha-256'))
+    new_user = User(email=email, firstname=firstname, lastname=lastname,
+    password=generate_password_hash(password,method='sha-256'),phonenumber=phonenumber)
 
     db.session.add(new_user)
     db.session.commit()
@@ -111,7 +111,11 @@ def login_post():
         return redirect(url_for('login'))
 
     login_user(user)
-    return redirect(url_for("profile"))
+    return redirect(url_for("home"))
+@app.route("/home")
+@login_required
+def home():
+  return render_template("home.html")
 
 app.run(  # Starts the site
         host="172.20.10.2",  # Required to run the site. must use your own ip
