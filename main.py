@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import phonenumbers
 
 
 #********INITIALISATION********#
@@ -80,20 +80,26 @@ def signup_post():
     email = request.form['email']
     confirmpassword = request.form["confirm-password"]
     user = User.query.filter_by(email=email).first()
-    try int(phonenumber):
-        pass
-    except:
-        flash('Invalid Phone Number⠀⠀')
-        return redirect(url_for('signup')) 
+    phonenumberverification = phonenumbers.parse(phonenumber)
+    if not phonenumbers.is_possible_number(phonenumberverification):
+        flash('Invalid phone number⠀⠀')
+        return redirect(url_for('signup'))
     if confirmpassword != password:
         flash('Passwords do not match⠀⠀')
         return redirect(url_for('signup'))     
     if user:
         flash('Email address already exists⠀⠀')
         return redirect(url_for('signup'))
+    email_list = [*email]
+    if "@" not in email_list or "." not in email_list:
+        flash('Email must contain "@" and "."⠀⠀')
+        return redirect(url_for('signup'))
+    if len([*password]) <=7:
+        flash('Password must be at least 8 characters long⠀⠀')
+        return redirect(url_for('signup))
 
     new_user = User(email=email, firstname=firstname, lastname=lastname,
-    password=generate_password_hash(password,method='sha-256'),phonenumber=phonenumber)
+    password=generate_password_hash(password,method='sha-256'),password=password)
 
     db.session.add(new_user)
     db.session.commit()
@@ -108,7 +114,10 @@ def login_post():
     email = request.form['email']
     password = request.form['password']
     user = User.query.filter_by(email=email).first()
-  
+    email_list = [*email]
+    if "@" not in email_list or "." not in email_list:
+        flash('Email must contain "@" and "."⠀⠀')
+        return redirect(url_for('login')
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
         return redirect(url_for('login'))
