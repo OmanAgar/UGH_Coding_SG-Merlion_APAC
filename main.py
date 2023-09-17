@@ -25,13 +25,14 @@ ors_key = "5b3ce3597851110001cf62488f97a0c484214cacb893f3be729f251a"
 
 db = SQLAlchemy(app)
 class User(UserMixin, db.Model):
-    email = db.Column(db.String(100), unique = True, nullable = False,primary_key = True)
+    email = db.Column(db.String(100), unique = True, nullable = False)
     password = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(timezone=True), server_default = func.now())
     firstname = db.Column(db.String(100), nullable = False)
     lastname = db.Column(db.String(100), nullable = False)
     age = db.Column(db.Integer, nullable = False)
     phonenumber = db.Column(db.Integer, nullable = False,unique = True)
+    id = db.Column(db.Integer, primary_key = True)
     def __repr__(self):
         return f'<User {self.name}>'
 
@@ -60,6 +61,10 @@ with app.app_context():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))   
 
 @app.route("/signup")
 def signup():
@@ -105,10 +110,6 @@ def login_post():
 
     login_user(user)
     return redirect(url_for("profile"))
-
-@login_manager.user_loader
-def load_user(user_id):
-      return User.query.get(int(user_id))   
 
 app.run(  # Starts the site
         host="192.168.18.4",  # Required to run the site. must use your own ip
