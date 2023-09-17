@@ -114,6 +114,6 @@ def login_post():
     return redirect(url_for("profile"))
 
 app.run(  # Starts the site
-        host="192.168.18.4",  # Required to run the site. must use your own ip
+        host="172.20.10.2",  # Required to run the site. must use your own ip
         debug=True  # to run Flask in debug mode
        )
