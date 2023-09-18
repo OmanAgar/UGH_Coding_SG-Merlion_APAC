@@ -26,14 +26,13 @@ ors_key = "5b3ce3597851110001cf62488f97a0c484214cacb893f3be729f251a"
 db = SQLAlchemy(app)
 class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
-    password = db.Column(db.Integer)
-    created_at = db.Column(db.DateTime(timezone=True), server_default = func.now())
+    password = db.Column(db.String(100),nullable=False)
     firstname = db.Column(db.String(100), nullable = False)
     lastname = db.Column(db.String(100), nullable = False)
     phonenumber = db.Column(db.Integer, nullable = False,unique = True)
     id = db.Column(db.Integer, primary_key = True)
     def __repr__(self):
-        return f'<User {self.name}>'
+        return f'<User {self.firstname} {self.lastname}>'
 
 class Driver(db.Model):
     email = db.Column(db.String(100), nullable = False,unique = True,primary_key = True)
@@ -80,9 +79,13 @@ def signup_post():
     email = request.form['email']
     confirmpassword = request.form["confirm-password"]
     user = User.query.filter_by(email=email).first()
-    phonenumberverification = phonenumbers.parse(phonenumber)
+    try:
+        phonenumberverification = phonenumbers.parse(phonenumber)
+    except:
+        flash('Invalid phone number (Ex: +65 1234 5678)⠀⠀')
+        return redirect(url_for('signup'))
     if not phonenumbers.is_possible_number(phonenumberverification):
-        flash('Invalid phone number⠀⠀')
+        flash('Invalid phone number (Ex: +65 1234 5678)⠀⠀')
         return redirect(url_for('signup'))
     if confirmpassword != password:
         flash('Passwords do not match⠀⠀')
@@ -99,7 +102,7 @@ def signup_post():
         return redirect(url_for('signup'))
 
     new_user = User(email=email, firstname=firstname, lastname=lastname,
-    password=generate_password_hash(password,method='sha-256'),password=password)
+    password=generate_password_hash(password,method='sha-256'),phonenumber=phonenumber)
 
     db.session.add(new_user)
     db.session.commit()
@@ -129,7 +132,6 @@ def login_post():
 def home():
   return render_template("home.html")
 
-app.run(  # Starts the site
-        host="172.20.10.2",  # Required to run the site. must use your own ip
-        debug=True  # to run Flask in debug mode
-       )
+# Replit required code to run
+if __name__ == "__main__":
+    app.run(host="0.0.0.0",port='8080',debug=True)
