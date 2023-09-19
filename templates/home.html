@@ -73,8 +73,28 @@
     <div class="container">
         <h2>Welcome to Uberland-Rideshare</h2>
         <p>Where can we take you today?</p>
-        <input type="text" id="origin" placeholder="Origin">
-        <input type="text" id="destination" placeholder="Destination">
+        <label for="origin">Origin:</label>
+        <select name="origin" id="origin" required=True>
+            <option value="UberLand Shopping Complex">UberLand Shopping Complex</option>
+            <option value="UberLand Middle School">UberLand Middle School</option>
+            <option value="UberLand Airport">UberLand Airport</option>
+            <option value="Uberland Bus Interchange">Uberland Bus Interchange</option>
+            <option value="UberLand Food Centre">UberLand Food Centre</option>
+            <option value="UberLand Swimming Complex">UberLand Swimming Complex</option>
+            <option value="UberLand Estates">UberLand Estates</option>
+            <option value="Uberland Country Club">Uberland Country Club</option>
+        </select>
+        <label for="destination">Destination:</label>
+        <select name="destination" id="destination" required=True>
+            <option value="UberLand Shopping Complex">UberLand Shopping Complex</option>
+            <option value="UberLand Middle School">UberLand Middle School</option>
+            <option value="UberLand Airport">UberLand Airport</option>
+            <option value="Uberland Bus Interchange">Uberland Bus Interchange</option>
+            <option value="UberLand Food Centre">UberLand Food Centre</option>
+            <option value="UberLand Swimming Complex">UberLand Swimming Complex</option>
+            <option value="UberLand Estates">UberLand Estates</option>
+            <option value="Uberland Country Club">Uberland Country Club</option>
+        </select>
         <button id="searchButton">Request a ride</button>
     </div>
 </body>
