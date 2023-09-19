@@ -138,6 +138,18 @@ def logout():
   logout_user()
   return redirect(url_for("index"))
 
+@app.route("/route", methods=["GET", "POST"])
+@login_required
+def route():
+    if request.method == "POST":
+        origin = request.form.get("origin")
+        destination = request.form.get("destination")
+
+        return render_template("route.html")
+
+    # If it's a GET request, render the initial form
+    return render_template("home.html")
+
 # Replit required code to run
 if __name__ == "__main__":
     app.run(host="172.20.10.2",debug=True)

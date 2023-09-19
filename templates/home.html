@@ -96,30 +96,24 @@
             <option value="Uberland Country Club">Uberland Country Club</option>
         </select>
         <button onclick="checkSelectedValues()">Request a ride</button>
-<p id="errorMessage" style="color: red;"></p>
-    </div>
-</body>
+<p id="errorMessage"></p>
     <script>
         function checkSelectedValues() {
-            var selectElement = document.getElementById("destinationSelect");
-            var selectedOptions = [];
+            var originSelect = document.getElementById("origin");
+            var destinationSelect = document.getElementById("destination");
 
-            for (var i = 0; i < selectElement.options.length; i++) {
-                if (selectElement.options[i].selected) {
-                    selectedOptions.push(selectElement.options[i].value);
-                }
-            }
+            var selectedOrigin = originSelect.value;
+            var selectedDestination = destinationSelect.value;
 
-            if (hasDuplicates(selectedOptions)) {
+            if (selectedOrigin === selectedDestination) {
                 document.getElementById("errorMessage").textContent =
-                    "You are not allowed to choose the same destination more than once.";
+                    "You are not allowed to choose the same destination as your origin.";
             } else {
-                document.getElementById("errorMessage").textContent = "";
+                // If origin and destination are different, redirect to "/route"
+                window.location.href = "/route";
             }
-        }
-
-        function hasDuplicates(array) {
-            return new Set(array).size !== array.length;
         }
     </script>
+    </div>
+</body>
 </html>
