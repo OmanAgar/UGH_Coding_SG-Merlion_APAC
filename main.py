@@ -40,20 +40,16 @@ class Driver(db.Model):
     peopleallowedtocarry = db.Column(db.Integer, nullable = False)
     model = db.Column(db.String(100), nullable = False)
     seats = db.Column(db.Integer, nullable = False)
-    id = db.Column(db.Integer, primary_key = True)
 
 # coords use long1,lat1,long2,lat2
 class Route(db.Model):
-    lo1 = db.Column(db.Float, nullable = False)
-    la1 = db.Column(db.Float, nullable = False)
-    lo2 = db.Column(db.Float, nullable = False)
-    la2 = db.Column(db.Float, nullable = False)
+    origin = db.Column(db.String(100), nullable = False)
+    destination = db.Column(db.String(100), nullable = False)
     driver = db.Column(db.String(100), nullable = False)
-    rider = db.Column(db.String(100), nullable = False)
-    id = db.Column(db.Integer, primary_key = True)
+    rider = db.Column(db.String(100), nullable = False,primary_key = True)
 
 with app.app_context():
-    db.drop_all()
+    #db.drop_all()
     db.create_all()
 
 
@@ -130,7 +126,23 @@ def login_post():
 @app.route("/home")
 @login_required
 def home():
-  return render_template("home.html")
+    return render_template("home.html")
+
+@app.route("/home",methods = ["POST"])
+def home_post():
+        origin = request.form.get("origin")
+        destination = request.form.get("destination")
+        user = current_user
+        rider_email = user.email
+        print(f"{origin} {destination} {rider_email}")
+        if origin == destination:
+            flash('Not allowed to have same origin and destination. Please try again')
+            return redirect(url_for('home'))
+        new_route = Route(origin=origin, destination=destination, driver = "None",
+        rider = rider_email)
+        db.session.add(new_route)
+        db.session.commit()
+        return render_template("route.html")
 
 @app.route("/logout")
 @login_required
@@ -138,17 +150,19 @@ def logout():
   logout_user()
   return redirect(url_for("index"))
 
-@app.route("/route", methods=["GET", "POST"])
+@app.route('/route')
 @login_required
-def route():
-    if request.method == "POST":
-        origin = request.form.get("origin")
-        destination = request.form.get("destination")
+def route_info():
+    try:
+        # Retrieve the route information for the current logged-in user
+        routes = Route.query.filter_by(rider=current_user.email).all()
+        print(routes)
+        return render_template('route.html', routes=routes)  # Updated variable name
+    except Exception as e:
+        flash(f"An error occurred: {str(e)}")
+        return render_template('route.html', routes=None)  # Updated variable name
 
-        return render_template("route.html")
 
-    # If it's a GET request, render the initial form
-    return render_template("home.html")
 
 # Replit required code to run
 if __name__ == "__main__":

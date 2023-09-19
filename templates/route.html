@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Route Information</title>
+</head>
+<body>
+    <h1>Route Information</h1>
+    <ul>
+        {% for route in routes %}
+        <li>
+            <strong>Origin:</strong> {{ route.origin }}<br>
+            <strong>Destination:</strong> {{ route.destination }}<br>
+            <strong>Driver:</strong> {{ route.driver }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
