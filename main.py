@@ -47,6 +47,8 @@ class Route(db.Model):
     destination = db.Column(db.String(100), nullable = False)
     driver = db.Column(db.String(100), nullable = False)
     rider = db.Column(db.String(100), nullable = False,primary_key = True)
+    eta = db.Column(db.Integer, nullable = False)
+    distance = db.Column(db.Integer, nullable = False)
 
 with app.app_context():
     #db.drop_all()
@@ -149,8 +151,10 @@ def home_post():
         "UberLand Estates": [-4,3]
         "UberLand Country Club": [1,0]
             }
-    distance = (sqrt((locations[origin][0]**)-(locations[destination][0]**)+(locations[origin][1]**)-(locations[destnation][1]**)))*2+2
+    distance = (sqrt((locations[origin][0]**)-(locations[destination][0]**)+(locations[origin][1]**)-(locations[destnation][1]**)))
     print(distance)
+    eta = distance*2+2
+    print(eta)
     if origin == destination:
         flash('Not allowed to have the same origin and destination. Please try again')
     elif routes != []:
@@ -160,7 +164,9 @@ def home_post():
             origin=origin,
             destination=destination,
             driver="None",
-            rider=rider_email
+            rider=rider_email,
+            eta = eta,
+            distance = distance
         )
         db.session.add(new_route)
         db.session.commit()
