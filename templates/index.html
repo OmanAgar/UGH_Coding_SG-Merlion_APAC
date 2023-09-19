@@ -80,6 +80,9 @@
       {% if current_user.is_authenticated %}
         <a href="home" class="cta-button">Home</a>
         <a href="logout" class="cta-button">Logout</a>
+        {% if not driver %}
+          <a href="driver_signup" id="becomeDriverButton">Become a Driver</a>
+        {% endif %}
       {% endif %}
       {% if not current_user.is_authenticated %}
         <a href="signup" class="cta-button">Sign Up</a>

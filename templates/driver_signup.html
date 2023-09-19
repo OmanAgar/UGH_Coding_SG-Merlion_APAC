@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
+    <title>Become a driver!</title>
     <style>
         /* Add your CSS styles here */
         body {
@@ -66,30 +66,22 @@
 <body>
     <div class="container">
         <h1>Sign Up</h1>
-        <form action="signup" method="POST">
+        <form action="driver_signup" method="POST">
             <div class="form-group">
-                <label for="first-name">First Name:</label>
-                <input type="text" id="first-name" name="first-name" class="form-control" id="floatingInput" required>
+                <label for="vehiclenumber">Vehicle Number:</label>
+                <input type="text" id="vehiclenumber" name="vehiclenumber" class="form-control" id="floatingInput" required>
             </div>
             <div class="form-group">
-                <label for="last-name">Last Name:</label>
-                <input type="text" id="last-name" name="last-name" class="form-control" id="floatingInput" required>
+                <label for="model">Car Model:</label>
+                <input type="tel" id="model" name="model" class="form-control" id="floatingInput" required>
             </div>
             <div class="form-group">
-                <label for="phone-number">Phone Number:</label>
-                <input type="tel" id="phone-number" name="phone-number" class="form-control" id="floatingInput" required>
+                <label for="peopleallowedtocarry">Max persons allowed to carry:</label>
+                <input type="int" id="peopleallowedtocarry" name="peopleallowedtocarry" class="form-control" id="floatingInput" required>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" class="form-control" id="floatingInput" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" id="floatingInput" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" class="form-control" id="floatingInput" required>
+                <label for="seats">Seats:</label>
+                <input type="int" id="seats" name="seats" class="form-control" id="floatingInput" required>
             </div>
             {% with messages = get_flashed_messages() %}
               {% if messages %}
@@ -101,7 +93,8 @@
               {% endif %}
             {% endwith %}
             {% block body %}{% endblock %}
-            <input type="submit" value="Sign Up" class="cta-button">
+            <a href="home" id="back">Back</a>
+            <input type="submit" value="Register" class="cta-button">
         </form>
     </div>
 </body>

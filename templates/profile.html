@@ -70,8 +70,16 @@
         <span class="logo">Uberland-Rideshare</span>
         <a href="profile" id="becomeDriverButton">Profile</a>
         <a href="logout" id="becomeDriverButton">Logout</a>
-        <a href="#" id="becomeDriverButton">Become a Driver</a>
+        <a href="driver_signup" id="becomeDriverButton">Become a Driver</a>
     </div>
+<div class="container">
+    <h1>Profile Summary</h1>
+    <div class="profile-summary">
+        <p><strong>Full Name:</strong> {{ current_user.firstname }} {{ current_user.lastname }}</p>
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <p><strong>Phone Number:</strong> {{ current_user.phonenumber }}</p>
+    </div>
+</div>
 <div class="container">
     <h1>Edit Profile</h1>
     <form action="profile" method="POST">

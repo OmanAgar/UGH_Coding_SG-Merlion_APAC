@@ -70,9 +70,22 @@
         <span class="logo">Uberland-Rideshare</span>
         <a href="profile" id="becomeDriverButton">Profile</a>
         <a href="logout" id="becomeDriverButton">Logout</a>
-        <a href="#" id="becomeDriverButton">Become a Driver</a>
+        {% if not driver %}
+            <a href="driver_signup" id="becomeDriverButton">Become a Driver</a>
+        {% else %}
+            <a href="driver_menu" id="becomeDriverButton">Driver Menu</a>
+        {% endif %}
     </div>
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes >
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <h2>Welcome to Uberland-Rideshare</h2>
         <p>Where can we take you today?</p>
 <form action="/home" method="POST"> 
@@ -98,15 +111,6 @@
         <option value="UberLand Estates">UberLand Estates</option>
         <option value="UberLand Country Club">UberLand Country Club</option>
     </select>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class=flashes >
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
     <input type="submit" value="Request a ride" class="cta-button">
 </form>
     </div>
@@ -127,6 +131,19 @@
             <p>Nothing to show here!</p>
         {% endif %}
     </ul>
+    </div>
+    <div class="container">
+        <h1>Driver Summary</h1>
+        {% if driver %}
+            <div class="driver-summary">
+                <p><strong>Vehicle Number:</strong> {{ driver.vehiclenumber }}</p>
+                <p><strong>Car Model:</strong> {{ driver.model }}</p>
+                <p><strong>Max persons allowed to carry:</strong> {{ driver.peopleallowedtocarry }}</p>
+                <p><strong>Seats:</strong> {{ driver.seats }}</p>
+            </div>
+        {% else %}
+            <p>Nothing to show here!</p>
+        {% endif %}
     </div>
 </body>
 </html>

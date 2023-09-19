@@ -58,7 +58,8 @@ with app.app_context():
 #********ROUTING********#
 @app.route('/')
 def index():
-    return render_template('index.html')
+    driver = Driver.query.filter_by(email=current_user.email).first()
+    return render_template('index.html',driver=driver)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -128,8 +129,9 @@ def login_post():
 @app.route("/home")
 @login_required
 def home():
+    driver = Driver.query.filter_by(email=current_user.email).first()
     routes = Route.query.filter_by(rider=current_user.email).all()
-    return render_template("home.html",routes=routes)
+    return render_template("home.html",routes=routes,driver=driver)
 
 # Updated home_post route handler
 @app.route("/home", methods=["POST"])
@@ -225,6 +227,36 @@ def profile_post():
 
     flash('Profile updated successfully.')
     return redirect(url_for('profile'))
+
+@app.route("/driver_signup")
+def driver_signup():
+    if Driver.query.filter_by(email=current_user.email).first() != None:
+        flash("You have already signed up as a driver")
+        return redirect(url_for('home'))
+    return render_template("driver_signup.html")
+
+@app.route("/driver_signup", methods = ['POST'])
+def driver_signup_post():
+    vehiclenumber = request.form['vehiclenumber']
+    peopleallowedtocarry = request.form['peopleallowedtocarry']
+    model = request.form['model']
+    seats = request.form['seats']
+    try:
+        seats_int = int(seats)
+    except:
+        flash("Field 'seats' must be an integer")
+        return redirect(url_for('driver_signup'))
+    try:
+        max_int = int(peopleallowedtocarry)
+    except:
+        flash("Field 'Max persons allowed to carry' must be an integer")
+        return redirect(url_for('driver_signup'))
+    new_driver = Driver(email=current_user.email, peopleallowedtocarry=peopleallowedtocarry, vehiclenumber=vehiclenumber,
+    seats=seats,model=model)
+
+    db.session.add(new_driver)
+    db.session.commit()
+    return redirect(url_for("home"))
 
 # Replit required code to run
 if __name__ == "__main__":
