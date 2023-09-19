@@ -193,6 +193,39 @@ def cancel_route():
         return redirect(url_for("home"))
     return redirect(url_for("home"))
 
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html", current_user=current_user)
+
+@app.route("/profile", methods=["POST"])
+@login_required
+def profile_post():
+    firstname = request.form['first-name']
+    lastname = request.form['last-name']
+    new_password = request.form['new-password']
+    confirm_new_password = request.form['confirm-new-password']
+    current_password = request.form['current-password']
+    user = current_user
+    if not check_password_hash(user.password, current_password):
+        flash('Current password is incorrect. Profile not updated.')
+        return redirect(url_for('profile'))
+    if new_password != confirm_new_password:
+        flash('New passwords do not match. Profile not updated.')
+        return redirect(url_for('profile'))
+    user.firstname = firstname
+    user.lastname = lastname
+    if new_password:
+        if len(new_password) < 8:
+            flash('New password must be at least 8 characters long. Profile not updated.')
+            return redirect(url_for('profile'))
+
+        user.password = generate_password_hash(new_password, method='sha-256')
+    db.session.commit()
+
+    flash('Profile updated successfully.')
+    return redirect(url_for('profile'))
+
 # Replit required code to run
 if __name__ == "__main__":
     app.run(host="172.20.10.2",debug=True)
