@@ -258,6 +258,16 @@ def driver_signup_post():
     db.session.commit()
     return redirect(url_for("home"))
 
+@app.route("/driver")
+@login_required
+def driver():
+    if Driver.query.filter_by(email=current_user.email).first() == None:
+        return redirect(url_for('driver_signup'))
+    driver = Driver.query.filter_by(email=current_user.email).first()
+    routes = Route.query.filter_by(driver=current_user.email).all()
+    passenger = User.query.filter_by(email=routes.rider).first()
+    return render_template("driver_menu.html",routes=routes,driver=driver,passenger=passenger)
+
 # Replit required code to run
 if __name__ == "__main__":
     app.run(host="172.20.10.2",debug=True)

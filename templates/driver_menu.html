@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uberland-Rideshare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.ibb.co/McHvC5c/road-car.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .toolbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        #becomeDriverButton {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #origin, #destination {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #searchButton {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <span class="logo">Uberland-Rideshare</span>
+        <a href="profile" id="becomeDriverButton">Profile</a>
+        <a href="logout" id="becomeDriverButton">Logout</a>
+        <a href="home" id="becomeDriverButton">Home</a>
+    <div class="container">
+        <h1>Driver Summary</h1>
+        {% if driver %}
+            <div class="driver-summary">
+                <p><strong>Vehicle Number:</strong> {{ driver.vehiclenumber }}</p>
+                <p><strong>Car Model:</strong> {{ driver.model }}</p>
+                <p><strong>Max persons allowed to carry:</strong> {{ driver.peopleallowedtocarry }}</p>
+                <p><strong>Seats:</strong> {{ driver.seats }}</p>
+            </div>
+        {% else %}
+            <p>Nothing to show here!</p>
+        {% endif %}
+    </div>
+    <div class="container">
+    <h2>Routes</h2>
+    <ul>
+        {% if routes %}
+            {% for route in routes %}
+            <li>
+                <strong>Origin:</strong> {{ route.origin }}<br>
+                <strong>Destination:</strong> {{ route.destination }}<br>
+                <strong>Passenger:</strong> {{ passenger.firstname }} {{ passengerlastname }}<br>
+                <strong>Distance / ETA:</strong> {{ route.distance }} km / {{ route.eta }} mins<br>
+            </li>
+            <a href="cancel_route" class="cta-button">Decline route</a>
+            {% endfor %}
+        {% else %}
+            <p>Nothing to show here!</p>
+        {% endif %}
+    </ul>
+    </div>
+</body>
+</html>
