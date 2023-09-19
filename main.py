@@ -160,6 +160,18 @@ def logout():
   logout_user()
   return redirect(url_for("index"))
 
+@app.route("/cancel_route")
+@login_required
+def cancel_route():
+    try:
+        route_to_cancel = Route.query.get(current_user.email)
+        if route_to_cancel.rider == current_user.email:
+            db.session.delete(route_to_cancel)
+            db.session.commit()
+    except:
+        return redirect(url_for("home"))
+    return redirect(url_for("home"))
+
 # Replit required code to run
 if __name__ == "__main__":
     app.run(host="172.20.10.2",debug=True)
