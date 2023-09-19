@@ -5,7 +5,7 @@ from sqlalchemy.sql import func
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import phonenumbers
-
+import math
 
 #********INITIALISATION********#
 app = Flask(__name__)
@@ -138,6 +138,19 @@ def home_post():
     user = current_user
     rider_email = user.email
     routes = Route.query.filter_by(rider=current_user.email).all()
+    #xy coords
+    locations = {
+        "UberLand Shopping Complex": [1,0]
+        "UberLand Middle School": [-1,4]
+        "UberLand Airport": [5,1]
+        "UberLand Bus Interchange": [-3,1]
+        "UberLand Food Centre": [-4,-1]
+        "UberLand Swimming Complex": [2,2]
+        "UberLand Estates": [-4,3]
+        "UberLand Country Club": [1,0]
+            }
+    distance = (sqrt((locations[origin][0]**)-(locations[destination][0]**)+(locations[origin][1]**)-(locations[destnation][1]**)))*2+2
+    print(distance)
     if origin == destination:
         flash('Not allowed to have the same origin and destination. Please try again')
     elif routes != []:
