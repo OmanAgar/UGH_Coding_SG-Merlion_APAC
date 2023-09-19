@@ -109,5 +109,21 @@
 </form>
     <a href="logout" class="cta-button">Logout</a>
     </div>
+    <div class="container">
+    <h2>Route Information</h2>
+    <ul>
+        {% if routes %}
+            {% for route in routes %}
+            <li>
+                <strong>Origin:</strong> {{ route.origin }}<br>
+                <strong>Destination:</strong> {{ route.destination }}<br>
+                <strong>Driver:</strong> {{ route.driver }}<br>
+            </li>
+            {% endfor %}
+        {% else %}
+            <p>Nothing to show here!</p>
+        {% endif %}
+    </ul>
+    </div>
 </body>
 </html>

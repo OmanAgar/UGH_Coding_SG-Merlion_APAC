@@ -126,7 +126,8 @@ def login_post():
 @app.route("/home")
 @login_required
 def home():
-    return render_template("home.html")
+    routes = Route.query.filter_by(rider=current_user.email).all()
+    return render_template("home.html",routes=routes)
 
 # Updated home_post route handler
 @app.route("/home", methods=["POST"])
@@ -136,50 +137,22 @@ def home_post():
     destination = request.form.get("destination")
     user = current_user
     rider_email = user.email
-    try:
-        routes = Route.query.filter_by(rider=current_user.email).all()
-        flash('You already have a route!')
-        return redirect(url_for("home"))
-
-    except:
-        if origin == destination:
-            flash('Not allowed to have the same origin and destination. Please try again')
-        else:
-            new_route = Route(
-                origin=origin,
-                destination=destination,
-                driver="None",
-                rider=rider_email
-            )
-
-            db.session.add(new_route)
-            db.session.commit()
-            return redirect(url_for("route"))
+    routes = Route.query.filter_by(rider=current_user.email).all()
+    if origin == destination:
+        flash('Not allowed to have the same origin and destination. Please try again')
+    elif routes != []:
+        flash('You are not allowed to have more than one route. Please try again')
+    else:
+        new_route = Route(
+            origin=origin,
+            destination=destination,
+            driver="None",
+            rider=rider_email
+        )
+        db.session.add(new_route)
+        db.session.commit()
 
     return redirect(url_for("home"))
-
-
-# New route handler for /route (GET) to display current routes
-@app.route("/route", methods=["GET"])
-@login_required
-def route():
-    try:
-        # Retrieve the route information for the current logged-in user
-        routes = Route.query.filter_by(rider=current_user.email).all()
-        return render_template("route.html", routes=routes)
-    except Exception as e:
-        flash(f"An error occurred: {str(e)}")
-        return render_template("route.html", routes=None)
-
-# New route handler for /route (POST) - Placeholder for handling POST requests to /route
-@app.route("/route", methods=["POST"])
-@login_required
-def route_post():
-    # Handle POST requests for /route here (if needed)
-    return redirect(url_for("home"))
-
-# ...
-
 
 @app.route("/logout")
 @login_required
