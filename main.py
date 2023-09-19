@@ -151,7 +151,11 @@ def home_post():
         "UberLand Estates": [-4,3],
         "UberLand Country Club": [1,0]
             }
-    distance = (locations[origin][0]**)-(locations[destination][0]**)+(locations[origin][1]**)-(locations[destnation][1]**)
+    x1 = locations[origin][0]**
+    x2 = locations[destination][0]**
+    y1 = locations[origin][1]**
+    y2 = locations[destnation][1]**
+    distance = x1-x2+y1-y2
     distance.sqrt()
     print(distance)
     eta = distance*2+2
