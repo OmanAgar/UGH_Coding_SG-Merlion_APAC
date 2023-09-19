@@ -132,6 +132,12 @@ def login_post():
 def home():
   return render_template("home.html")
 
+@app.route("/logout")
+@login_required
+def logout():
+  logout_user()
+  return redirect(url_for("index"))
+
 # Replit required code to run
 if __name__ == "__main__":
     app.run(host="172.20.10.2",debug=True)
