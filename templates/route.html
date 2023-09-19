@@ -6,6 +6,9 @@
 <body>
     <h1>Route Information</h1>
     <ul>
+        {% if len(routes) == 0}
+            You have nothing to show!
+        {% endif %}    
         {% for route in routes %}
         <li>
             <strong>Origin:</strong> {{ route.origin }}<br>
@@ -14,5 +17,6 @@
         </li>
         {% endfor %}
     </ul>
+    <a href="home" class="cta-button">Back to home</a>
 </body>
 </html>
