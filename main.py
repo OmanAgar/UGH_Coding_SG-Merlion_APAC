@@ -5,7 +5,7 @@ from sqlalchemy.sql import func
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import phonenumbers
-import math
+import math , random
 
 #********INITIALISATION********#
 app = Flask(__name__)
@@ -46,6 +46,7 @@ class Route(db.Model):
     origin = db.Column(db.String(100), nullable = False)
     destination = db.Column(db.String(100), nullable = False)
     driver = db.Column(db.String(100), nullable = False)
+    driver_name = db.Column(db.String(100), nullable = False)
     rider = db.Column(db.String(100), nullable = False,primary_key = True)
     eta = db.Column(db.Integer, nullable = False)
     distance = db.Column(db.Integer, nullable = False)
@@ -159,16 +160,28 @@ def home_post():
     y2 = locations[destination][1]*locations[destination][1]
     distance = round(math.sqrt(abs(round(x1-x2+y1-y2)))*4)
     eta = round(distance/1.5)
+    available_drivers = Driver.query.all()
+    if available_drivers:
+        random_index = random.randint(0, len(available_drivers) - 1)
+        selected_driver = available_drivers[random_index].email
+        driverobj = User.query.filter_by(email=selected_driver)
+        fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
+    else:
+        flash("No available drivers. Cancel route and try again later")
+        return redirect(url_for('home'))
     if origin == destination:
         flash('Not allowed to have the same origin and destination. Please try again')
+        return redirect(url_for('home'))
     elif routes != []:
         flash('You are not allowed to have more than one route. Please try again')
+        return redirect(url_for('home'))
     else:
         new_route = Route(
             origin=origin,
             destination=destination,
-            driver="None",
+            driver=selected_driver,
             rider=rider_email,
+            driver_name = fullname,
             eta = eta,
             distance = distance
         )
@@ -267,6 +280,20 @@ def driver():
     routes = Route.query.filter_by(driver=current_user.email).all()
     passenger = User.query.filter_by(email=routes.rider).first()
     return render_template("driver_menu.html",routes=routes,driver=driver,passenger=passenger)
+
+@app.route("/decline_route")
+@login_required
+def decline_route():
+    if Driver.query.filter_by(email=current_user.email).first() == None:
+        return redirect(url_for('driver_signup'))
+    try:
+        route_to_cancel = Route.query.get(current_user.email)
+        if route_to_cancel.rider == current_user.email:
+            db.session.delete(route_to_cancel)
+            db.session.commit()
+    except:
+        return redirect(url_for("driver"))
+    return redirect(url_for("driver"))
 
 # Replit required code to run
 if __name__ == "__main__":
