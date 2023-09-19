@@ -51,7 +51,7 @@ class Route(db.Model):
     distance = db.Column(db.Integer, nullable = False)
 
 with app.app_context():
-    #db.drop_all()
+    #db.drop_all() #resets database
     db.create_all()
 
 
@@ -151,15 +151,12 @@ def home_post():
         "UberLand Estates": [-4,3],
         "UberLand Country Club": [1,0]
             }
-    x1 = locations[origin][0]**
-    x2 = locations[destination][0]**
-    y1 = locations[origin][1]**
-    y2 = locations[destnation][1]**
-    distance = x1-x2+y1-y2
-    distance.sqrt()
-    print(distance)
-    eta = distance*2+2
-    print(eta)
+    x1 = locations[origin][0]*locations[origin][0]
+    x2 = locations[destination][0]*locations[destination][0]
+    y1 = locations[origin][1]*locations[origin][1]
+    y2 = locations[destination][1]*locations[destination][1]
+    distance = round(math.sqrt(abs(round(x1-x2+y1-y2)))*4)
+    eta = round(distance/1.5)
     if origin == destination:
         flash('Not allowed to have the same origin and destination. Please try again')
     elif routes != []:
