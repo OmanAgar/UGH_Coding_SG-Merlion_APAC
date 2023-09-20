@@ -32,8 +32,8 @@
 
 ## <span style="color: #3366ff;">Steps to Run the Site</span>
 1. <span style="color: #3366ff;">Download the code.</span>
-2. <span style="color: #3366ff;">Install the required modules listed in `requirements.txt` (ensure you use the specified versions).</span>
-3. <span style="color: #3366ff;">In `main.py`, configure the IP address and port for the website.</span>
+2. <span style="color: #3366ff;">Install the required modules listed in `requirements.txt` (ensure you use the specified versions for each module).</span>
+3. <span style="color: #3366ff;">In `main.py`, configure the IP address and port for the website located at the bottom of the file</span>
 4. <span style="color: #3366ff;">Run `main.py`.</span>
 
-> **<span style="color: #ff5733;">Prouldy made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023)</span>
+> **<span style="color: #ff5733;">Proudly made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023)</span>
