@@ -3,6 +3,12 @@
 ## <span style="color: #3366ff;">What is UberLand Rideshare?</span>
 <span style="color: #3366ff;">UberLand Rideshare is a community-driven ride-hailing platform that allows users to share rides, reaching their destinations in other users' cars!</span>
 
+## <span style="color: #3366ff;">What does UberLand Rideshare aim to solve?</span>
+<span style="color: #3366ff;">UberLand Rideshare aims to fix the issue on traffic congestion and travel times. By allowing users to hitch a ride with a driver anywhere anytime, we eliminate the need for riders to wait for a street taxi. We also used an algorithm that allows us to calculate the shortest distance from one place to another. Thus, improving efficiency by shortening each trip.</span>
+<span style="color: #3366ff;">UberLand Rideshare also aims to provide inclusivity by allowing wheelchair-bound riders to be able to find a driver that allows them to travel to their destination safely and hassle-free</span>
+
+
+
 ## <span style="color: #3366ff;">How Does UberLand Rideshare Run?</span>
 <span style="color: #3366ff;">We've leveraged Python for data handling and hosting, HTML for website design, and CSS for an appealing user interface. This solution enhances transportation efficiency by enabling citizens to hitch rides with fellow citizens, eliminating the need for dedicated taxi drivers.</span>
 
