@@ -188,28 +188,23 @@ def home_post(): #processes the routefinding
   distance = round(math.sqrt(abs(round(x1 - x2 + y1 - y2))) * 4)
   eta = round(distance / 1.5)
   available_drivers = Driver.query.all()
+  index = 0
+  max_index = len(available_drivers)
   if available_drivers:
-    random_index = random.randint(0, len(available_drivers) - 1)
-    selected_driver = available_drivers[random_index].email
-    if selected_driver != current_user.email:
-        driverobj = User.query.filter_by(email=selected_driver)
-        fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
-    else:
-        try:
-            selected_driver = available_drivers[random_index+1].email
+    while True:
+        if max_index == index:
+            flash("No available drivers. Cancel route and try again later")
+            return redirect(url_for('home')) 
+        selected_driver = available_drivers[index].email
+        if selected_driver != current_user.email and Route.query.filter_by(driver=selected_driver).first() is None:
             driverobj = User.query.filter_by(email=selected_driver)
             fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
-        except:
-            try:
-                selected_driver = available_drivers[random_index-1].email
-                driverobj = User.query.filter_by(email=selected_driver)
-                fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"     
-            except:
-                flash("No available drivers. Cancel route and try again later")
-                return redirect(url_for('home'))                       
+            break
+        else:
+            index += 1
   else:
     flash("No available drivers. Cancel route and try again later")
-    return redirect(url_for('home'))
+    return redirect(url_for('home'))                       
   if origin == destination:
     flash(
         'Not allowed to have the same origin and destination. Please try again'
@@ -218,6 +213,8 @@ def home_post(): #processes the routefinding
   elif routes != []:
     flash('You are not allowed to have more than one route. Please try again')
     return redirect(url_for('home'))
+    driverobj = User.query.filter_by(email=selected_driver)
+    fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
   else:
     new_route = Route(origin=origin,
                       destination=destination,
@@ -346,14 +343,13 @@ def driver(): #driver homepage
 def decline_route(): #allows the driver to cancel a route
   if Driver.query.filter_by(email=current_user.email).first() is None:
     return redirect(url_for('driver_signup'))
-  try:
-    route_to_cancel = Route.query.get(current_user.email)
-    if route_to_cancel.rider == current_user.email:
-      db.session.delete(route_to_cancel)
-      db.session.commit()
-  except:
-    flash("Error declining route. Try again later")
-    return redirect(url_for("driver"))
+  # try:
+  route_to_cancel = Route.query.filter_by(driver=current_user.email).all()
+  db.session.delete(route_to_cancel[0])
+  db.session.commit()
+  # except:
+  #   flash("Error declining route. Try again later")
+  #   return redirect(url_for("driver"))
   return redirect(url_for("driver"))
 
 

@@ -73,6 +73,16 @@
         <a href="home" id="becomeDriverButton">Home</a>
     </div>
     <div class="container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+            {% for message in messages %}
+                <h5>{{message}}</h5>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+        {% block body %}{% endblock %}
         <h1>Driver Summary</h1>
         {% if driver %}
             <div class="driver-summary">
