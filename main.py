@@ -191,8 +191,22 @@ def home_post(): #processes the routefinding
   if available_drivers:
     random_index = random.randint(0, len(available_drivers) - 1)
     selected_driver = available_drivers[random_index].email
-    driverobj = User.query.filter_by(email=selected_driver)
-    fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
+    if selected_driver != current_user.email:
+        driverobj = User.query.filter_by(email=selected_driver)
+        fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
+    else:
+        try:
+            selected_driver = available_drivers[random_index+1].email
+            driverobj = User.query.filter_by(email=selected_driver)
+            fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"
+        except:
+            try:
+                selected_driver = available_drivers[random_index-1].email
+                driverobj = User.query.filter_by(email=selected_driver)
+                fullname = f"{driverobj[0].firstname } { driverobj[0].lastname }"     
+            except:
+                flash("No available drivers. Cancel route and try again later")
+                return redirect(url_for('home'))                       
   else:
     flash("No available drivers. Cancel route and try again later")
     return redirect(url_for('home'))
@@ -344,4 +358,4 @@ def decline_route(): #allows the driver to cancel a route
 
 # Replit required code to run
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port="8080", debug=True)
+  app.run(host="172.20.10.6", port="8080", debug=True)
