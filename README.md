@@ -51,9 +51,11 @@
  - <span style="color: #3366ff;">Try re-installing the modules via `requirements.txt` and try again.</span>
 2. <span style="color: #3366ff;">Restarting the database</span>
  - <span style="color: #3366ff;">Un-comment line 59 in `main.py`</span>
-` #********MAKING THE DATABASE********#
-with app.app_context():
-  #db.drop_all() #resets database !!!! UNCOMMENT THIS LINE !!!!
-  db.create_all()`
+ - ```
+   #********MAKING THE DATABASE********#
+   with app.app_context():
+   #db.drop_all() #resets database !!!! UNCOMMENT THIS LINE !!!!
+   db.create_all()
+   ```
 
 > **<span style="color: #ff5733;">Proudly made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023 APAC DIVISION)</span>
