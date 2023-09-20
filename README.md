@@ -22,10 +22,13 @@
 
 ## <span style="color: #3366ff;">Future Enhancements for UberLand Rideshare</span>
 1. **<span style="color: #ff5733;">User Experience</span>**:
-   - <span style="color: #3366ff;">Enhance user interaction with features like haptic response.</span>
+   - <span style="color: #3366ff;">Enhance user interaction with features like haptic response. Allow drivers to set coupon codes for riders to enjoy discounts.</span>
 
 2. **<span style="color: #ff5733;">Website Functionality</span>**:
-   - <span style="color: #3366ff;">Add features such as mapping and real-time ride updates when drivers accept requests.</span>
+   - <span style="color: #3366ff;">Add features such as mapping and real-time ride updates when drivers accept requests. Can also add a remember me button so that user does not have to log in.</span>
+
+2. **<span style="color: #ff5733;">Inclusivity of others</span>**:
+   - <span style="color: #3366ff;">Allowing riders to request a wheelchair-friendly ride, discounts for low-income citizens</span>
 
 ## <span style="color: #3366ff;">Steps to Run the Site</span>
 1. <span style="color: #3366ff;">Download the code.</span>
