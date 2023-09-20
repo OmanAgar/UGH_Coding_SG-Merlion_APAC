@@ -42,4 +42,4 @@
 4. <span style="color: #3366ff;">Run `main.py`.</span>
 4. <span style="color: #3366ff;">Note: We have included some test drivers in `database.db` to test the ride hailing service.</span>
 
-> **<span style="color: #ff5733;">Proudly made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023)</span>
+> **<span style="color: #ff5733;">Proudly made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023 APAC DIVISION)</span>
