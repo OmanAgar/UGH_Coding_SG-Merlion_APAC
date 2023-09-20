@@ -319,7 +319,7 @@ def driver_signup_post(): #processes the sign up form
 
   db.session.add(new_driver)
   db.session.commit()
-  return redirect(url_for("home"))
+  return redirect(url_for("driver"))
 
 
 @app.route("/driver")
