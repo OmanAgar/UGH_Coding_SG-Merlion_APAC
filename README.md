@@ -19,7 +19,7 @@
 2. **<span style="color: #ff5733;">SqLite Database</span>**:
    - <span style="color: #3366ff;">Instead of using JSON to store our user's information, we have made use of flask-sqlalchemy to safely and efficiently store data, allowing the site to function better.</span>
 
-3. **<span style="color: #ff5733;"Flask Module</span>**:
+3. **<span style="color: #ff5733;">Flask Module</span>**:
    - <span style="color: #3366ff;">We have made use of Flask to host our website and allow users to register/log in to an account using flask-login.</span>
 
 ## <span style="color: #3366ff;">Challenges We Faced</span>
