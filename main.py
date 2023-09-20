@@ -54,7 +54,7 @@ class Route(db.Model):
   eta = db.Column(db.Integer, nullable=False)
   distance = db.Column(db.Integer, nullable=False)
 
-
+#********MAKING THE DATABASE********#
 with app.app_context():
   #db.drop_all() #resets database
   db.create_all()
@@ -62,7 +62,7 @@ with app.app_context():
 
 #********ROUTING********#
 @app.route('/')
-def index():
+def index(): #main page
   try:
     driver = Driver.query.filter_by(email=current_user.email).first()
   except:
@@ -71,12 +71,12 @@ def index():
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(user_id): #loads the user if logged in
   return User.query.get(int(user_id))
 
 
 @app.route("/signup")
-def signup():
+def signup(): #sign up for an account
   if current_user.is_authenticated:
       flash("Youre already logged in. Sign out to make an account")
       return redirect(url_for('home'))
@@ -84,7 +84,7 @@ def signup():
 
 
 @app.route("/signup", methods=['POST'])
-def signup_post():
+def signup_post(): #proccesses the fields and saves the data
   firstname = request.form['first-name']
   lastname = request.form['last-name']
   password = request.form['password']
@@ -132,12 +132,12 @@ def signup_post():
 
 
 @app.route("/login")
-def login():
+def login(): #login page
   return render_template("login.html")
 
 
 @app.route("/login", methods=['POST'])
-def login_post():
+def login_post(): #processes the data and matches the fields provided to an account
   email = request.form['email']
   password = request.form['password']
   user = User.query.filter_by(email=email).first()
@@ -155,7 +155,7 @@ def login_post():
 
 @app.route("/home")
 @login_required
-def home():
+def home(): #homepage if logged in
   driver = Driver.query.filter_by(email=current_user.email).first()
   routes = Route.query.filter_by(rider=current_user.email).all()
   return render_template("home.html", routes=routes, driver=driver)
@@ -164,7 +164,7 @@ def home():
 # Updated home_post route handler
 @app.route("/home", methods=["POST"])
 @login_required
-def home_post():
+def home_post(): #processes the routefinding
   origin = request.form.get("origin")
   destination = request.form.get("destination")
   user = current_user
@@ -220,14 +220,14 @@ def home_post():
 
 @app.route("/logout")
 @login_required
-def logout():
+def logout(): #logs the user out
   logout_user()
   return redirect(url_for("index"))
 
 
 @app.route("/cancel_route")
 @login_required
-def cancel_route():
+def cancel_route(): #allows the user to cancel their route
   try:
     route_to_cancel = Route.query.get(current_user.email)
     if route_to_cancel.rider == current_user.email:
@@ -240,13 +240,13 @@ def cancel_route():
 
 @app.route("/profile")
 @login_required
-def profile():
+def profile(): #page for user to view their profile summary and edit profile details
   return render_template("profile.html", current_user=current_user)
 
 
 @app.route("/profile", methods=["POST"])
 @login_required
-def profile_post():
+def profile_post(): #allows users to edit their profile
   firstname = request.form['first-name']
   lastname = request.form['last-name']
   new_password = request.form['new-password']
@@ -276,7 +276,7 @@ def profile_post():
 
 
 @app.route("/driver_signup")
-def driver_signup():
+def driver_signup(): #sign up to become a driver
   if Driver.query.filter_by(email=current_user.email).first() is not None:
     flash("You have already signed up as a driver")
     return redirect(url_for('home'))
@@ -284,7 +284,7 @@ def driver_signup():
 
 
 @app.route("/driver_signup", methods=['POST'])
-def driver_signup_post():
+def driver_signup_post(): #processes the sign up form
   vehiclenumber = request.form['vehiclenumber']
   peopleallowedtocarry = request.form['peopleallowedtocarry']
   model = request.form['model']
@@ -313,7 +313,7 @@ def driver_signup_post():
 
 @app.route("/driver")
 @login_required
-def driver():
+def driver(): #driver homepage
   if Driver.query.filter_by(email=current_user.email).first() == None:
     return redirect(url_for('driver_signup'))
   driver = Driver.query.filter_by(email=current_user.email).first()
@@ -329,7 +329,7 @@ def driver():
 
 @app.route("/decline_route")
 @login_required
-def decline_route():
+def decline_route(): #allows the driver to cancel a route
   if Driver.query.filter_by(email=current_user.email).first() is None:
     return redirect(url_for('driver_signup'))
   try:
