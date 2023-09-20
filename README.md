@@ -6,6 +6,13 @@
 ## <span style="color: #3366ff;">How Does UberLand Rideshare Run?</span>
 <span style="color: #3366ff;">We've leveraged Python for data handling and hosting, HTML for website design, and CSS for an appealing user interface. This solution enhances transportation efficiency by enabling citizens to hitch rides with fellow citizens, eliminating the need for dedicated taxi drivers.</span>
 
+## <span style="color: #3366ff;">Some features of UberLand Rideshare website</span>
+1. **<span style="color: #ff5733;">Security Enhancements</span>**:
+   - <span style="color: #3366ff;">We have made use of the SHA-256 algorithm to encrypt the users' passwords.</span>
+
+2. **<span style="color: #ff5733;">SqLite Database</span>**:
+   - <span style="color: #3366ff;">Instead of using JSON to store our user's information, we have made use of flask-sqlalchemy to safely and efficiently store data, allowing the site to function better.</span>
+
 ## <span style="color: #3366ff;">Challenges We Faced</span>
 1. **<span style="color: #ff5733;">Time Constraint</span>**:
    - <span style="color: #3366ff;">Given limited time, we streamlined the website by removing redundant functions.</span>
