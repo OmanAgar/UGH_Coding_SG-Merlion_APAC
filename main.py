@@ -352,6 +352,7 @@ def decline_route(): #allows the driver to cancel a route
       db.session.delete(route_to_cancel)
       db.session.commit()
   except:
+    flash("Error declining route. Try again later")
     return redirect(url_for("driver"))
   return redirect(url_for("driver"))
 
