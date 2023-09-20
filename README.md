@@ -57,5 +57,5 @@
    #db.drop_all() #resets database !!!! UNCOMMENT THIS LINE !!!!
    db.create_all()
    ```
-bub
+
 > **<span style="color: #ff5733;">Proudly made possible by</span>**: <span style="color: #3366ff;">Joxi, Hanjiong, and Yi Li of the SG Merlion team (Uber Hackathon 2023 APAC DIVISION)</span>
