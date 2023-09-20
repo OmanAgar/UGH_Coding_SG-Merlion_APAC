@@ -18,6 +18,9 @@
 2. **<span style="color: #ff5733;">SqLite Database</span>**:
    - <span style="color: #3366ff;">Instead of using JSON to store our user's information, we have made use of flask-sqlalchemy to safely and efficiently store data, allowing the site to function better.</span>
 
+3. **<span style="color: #ff5733;"Flask Module</span>**:
+   - <span style="color: #3366ff;">We have made use of Flask to host our website and allow users to register/log in to an account using flask-login.</span>
+
 ## <span style="color: #3366ff;">Challenges We Faced</span>
 1. **<span style="color: #ff5733;">Time Constraint</span>**:
    - <span style="color: #3366ff;">Given limited time, we streamlined the website by removing redundant functions.</span>
@@ -32,7 +35,7 @@
 2. **<span style="color: #ff5733;">Website Functionality</span>**:
    - <span style="color: #3366ff;">Add features such as mapping and real-time ride updates when drivers accept requests. Can also add a remember me button so that user does not have to log in.</span>
 
-2. **<span style="color: #ff5733;">Inclusivity of others</span>**:
+3. **<span style="color: #ff5733;">Inclusivity of others</span>**:
    - <span style="color: #3366ff;">Allowing riders to request a wheelchair-friendly ride, discounts for low-income citizens</span>
 
 ## <span style="color: #3366ff;">Steps to Run the Site</span>
